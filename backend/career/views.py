@@ -33,10 +33,6 @@ class DomainViewSet(viewsets.ReadOnlyModelViewSet):
             queryset = queryset.filter(degree_id=degree_id)
         return queryset
 
-class SkillViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Skill.objects.all()
-    serializer_class = SkillSerializer
-
 @api_view(['GET'])
 def domain_details(request, domain_id):
     domain = get_object_or_404(Domain, pk=domain_id)
@@ -92,26 +88,3 @@ def evaluate_career(request):
         "readiness": readiness,
         "roadmap": roadmap_serializer.data
     })
-
-@api_view(['POST'])
-def recommend_career(request):
-    likes_coding = request.data.get('likes_coding', False)
-    likes_business = request.data.get('likes_business', False)
-    likes_creativity = request.data.get('likes_creativity', False)
-    
-    recommended_names = []
-    
-    if likes_coding:
-        recommended_names.extend(['Software Engineering', 'AI/ML', 'Web Development', 'Data Science', 'Civil Engineering'])
-    if likes_business:
-        recommended_names.extend(['Business Analytics', 'Entrepreneurship', 'Finance', 'Financial Analysis'])
-    if likes_creativity:
-        recommended_names.extend(['Content Writing', 'Marketing', 'Digital Marketing Mgr', 'Journalism', 'Web Development'])
-        
-    if not recommended_names:
-        recommended_names = ['Data Analyst', 'Accountant', 'HR Specialist']
-        
-    # Pick distinct matches
-    domains = Domain.objects.filter(name__in=recommended_names)[:3]
-    from .serializers import DomainSerializer
-    return Response(DomainSerializer(domains, many=True).data)

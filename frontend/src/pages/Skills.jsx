@@ -6,23 +6,23 @@ export default function Skills() {
   const { domainId } = useParams();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [allSkills, setAllSkills] = useState([]);
+  const [domainSkills, setDomainSkills] = useState([]);
   const [selectedSkills, setSelectedSkills] = useState(new Set());
   const [loading, setLoading] = useState(true);
 
   const domainName = searchParams.get('domainName') || "this domain";
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/api/skills/`)
+    axios.get(`http://localhost:8000/api/domains/${domainId}/details/`)
       .then(res => {
-        setAllSkills(res.data);
+        setDomainSkills(res.data.topics);
         setLoading(false);
       })
       .catch(err => {
         console.error(err);
         setLoading(false);
       });
-  }, []);
+  }, [domainId]);
 
   const toggleSkill = (id) => {
     const nextList = new Set(selectedSkills);
@@ -47,14 +47,20 @@ export default function Skills() {
 
   return (
     <div className="fade-in">
-      <h2>Select Your Skills</h2>
-      <p className="subtitle">Which of these skills do you already possess for {domainName}?</p>
+      <h2>What Do You Already Know?</h2>
+      <p className="subtitle">
+        Select the skills you already have for <strong>{domainName}</strong>
+      </p>
+
+      <div className="skills-counter">
+        <span>{selectedSkills.size}</span> of <span>{domainSkills.length}</span> skills selected
+      </div>
       
       <div className="tags-container" style={{maxWidth: 700, margin: '0 auto 2rem'}}>
-        {allSkills.map(skill => (
+        {domainSkills.map(skill => (
           <div 
             key={skill.id} 
-            className={`tag-selectable \${selectedSkills.has(skill.id) ? 'selected' : ''}`}
+            className={`tag-selectable ${selectedSkills.has(skill.id) ? 'selected' : ''}`}
             onClick={() => toggleSkill(skill.id)}
           >
             <span className="tag-icon"></span>
@@ -65,7 +71,9 @@ export default function Skills() {
       
       <div className="actions" style={{justifyContent: 'center', gap: '1rem'}}>
         <button className="primary-btn glass-btn" onClick={() => navigate(-1)} style={{width: 'auto', marginBottom: 0}}>← Back</button>
-        <button className="primary-btn" onClick={submitSkills}>Calculate Readiness →</button>
+        <button className="primary-btn" onClick={submitSkills} disabled={selectedSkills.size === 0}>
+          Check My Readiness →
+        </button>
       </div>
     </div>
   );

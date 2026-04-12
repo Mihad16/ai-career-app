@@ -5,7 +5,7 @@ import Degree from "./pages/Degree";
 import Domain from "./pages/Domain";
 import Skills from "./pages/Skills";
 import Result from "./pages/Result";
-import Quiz from "./pages/Quiz";
+
 
 export default function App() {
   return (
@@ -19,7 +19,6 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/stream" element={<Stream />} />
             <Route path="/degree" element={<Degree />} />
-            <Route path="/quiz" element={<Quiz />} />
             <Route path="/domain/:degreeId" element={<Domain />} />
             <Route path="/skills/:domainId" element={<Skills />} />
             <Route path="/result" element={<Result />} />
