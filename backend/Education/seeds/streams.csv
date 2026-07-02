@@ -1,0 +1,19 @@
+education_level,name,description
+After 10th,Science,Science stream after Class 10
+After 10th,Commerce,Commerce stream after Class 10
+After 10th,Humanities,Humanities and Arts stream after Class 10
+After 10th,Diploma,Polytechnic Diploma programs after Class 10
+After 10th,ITI,Industrial Training Institute vocational courses
+
+After Plus Two (+2),Science,Science stream in Higher Secondary
+After Plus Two (+2),Commerce,Commerce stream in Higher Secondary
+After Plus Two (+2),Humanities,Humanities stream in Higher Secondary
+
+After Degree,Engineering,Engineering graduates
+After Degree,Computer Applications,Computer Application graduates
+After Degree,Management,Management graduates
+After Degree,Science,Science graduates
+After Degree,Commerce,Commerce graduates
+After Degree,Arts,Arts graduates
+After Degree,Medical,Medical graduates
+After Degree,Law,Law graduates edit this
